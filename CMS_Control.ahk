@@ -33,3 +33,21 @@ TakeSnapshot(1009, 632)
 return
 
 #IfWinActive
+
+TakeSnapshot(x, y)
+{
+    MouseMove, %x%, %y%, 0
+    Click, Right
+
+    WinWait, ahk_class #32768, , 0.2
+
+    if !ErrorLevel
+    {
+        SendEvent, s
+        SendEvent, {Enter}
+
+        ; Conditional wait: continue immediately when the menu closes.
+        ; Prevents a new capture while the previous context menu still exists.
+        WinWaitClose, ahk_class #32768, , 0.10
+    }
+}
